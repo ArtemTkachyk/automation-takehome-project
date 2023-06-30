@@ -1,17 +1,40 @@
 import "dotenv/config";
 import fs from "fs";
-import { lowestsPricesScraper } from "./helpers/lowestsPricesScraper";
-import { writeProductsToCSV } from "./helpers/writeProductsToCSV";
+import Runner from "./runner";
+import AmazonScrapper from "./scrappers/amazonScrapper";
+import {
+  AMAZON_STRATEGY,
+  COUNT_OF_ITEMS_TO_SEARCH,
+  DEFAULT_STRATEGY,
+} from "./common/constants";
+import CsvOutput from "./outputs/csvOutput";
 
 (async function () {
   const searchTerm = process.argv[2];
+  const strategy = process.argv[3] || DEFAULT_STRATEGY;
+  const countOfItems = +process.argv[4] || COUNT_OF_ITEMS_TO_SEARCH;
+
+  let scrapper: Runner;
+
+  switch (strategy) {
+    case AMAZON_STRATEGY: {
+      scrapper = new Runner(new AmazonScrapper());
+      break;
+    }
+    default: {
+      throw new Error("Scrapper not found!");
+    }
+  }
+
   fs.mkdirSync(process.env.OUTPUT_DIR!, { recursive: true });
-  const products = await lowestsPricesScraper(
-    process.env.BASE_URL!,
+
+  const products = await scrapper.getProductsWithLowestPrice(
     searchTerm,
+    countOfItems,
   );
-  await writeProductsToCSV(
-    products,
-    `${process.env.OUTPUT_DIR}/${process.env.OUTPUT_FILE}`,
+
+  const output = new CsvOutput(
+    `${process.env.OUTPUT_DIR}/${searchTerm}_${Date.now()}.csv`,
   );
+  await output.saveData(products);
 })().catch(console.error);
