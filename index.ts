@@ -10,6 +10,11 @@ import {
 import CsvOutput from "./outputs/csvOutput";
 
 (async function () {
+  if (!process.argv[2]) {
+    return console.error(
+      "\x1b[41m Run script with Search Parametrs as argument!\x1b[0m",
+    );
+  }
   const searchTerm = process.argv[2];
   const strategy = process.argv[3] || DEFAULT_STRATEGY;
   const countOfItems = +process.argv[4] || COUNT_OF_ITEMS_TO_SEARCH;

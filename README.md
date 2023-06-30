@@ -2,6 +2,7 @@
 
 1. `npm -i`
 2. `npm start [Parameters]`
+   Example: `npm start 'headphones wireless bluetooth' amazon 4`
 
 | Parameters             | Description                                                                |
 | ---------------------- | -------------------------------------------------------------------------- |

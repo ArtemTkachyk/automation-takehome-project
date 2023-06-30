@@ -58,7 +58,7 @@ class AmazonScrapper implements EcommerceBaseScrapper {
 
     chromium.use(stealth);
 
-    const browser = await chromium.launch({ headless: false });
+    const browser = await chromium.launch({ headless: true });
 
     const page = await this.goToMainPage(browser);
 
