@@ -1,3 +1,19 @@
+# Instructions to launch:
+
+1. `npm -i`
+2. `npm start [Parameters]`
+   Example: `npm start 'headphones wireless bluetooth' amazon 4`
+
+| Parameters             | Description                                                                |
+| ---------------------- | -------------------------------------------------------------------------- |
+| `searchTerm`           | The search term to use for scraping                                        |
+| `scrapperStrategy`     | (optional) Engine to be used for processing templates. `Amazon is default` |
+| `countOfItemsToScrape` | (optional) The number of items to scrape and retrieve. `3 is default`      |
+
+#### Instructions to launch tests:
+
+    npm run test
+
 # automation-takehome-project
 
 Project for candidates to complete as a hiring assessment.
