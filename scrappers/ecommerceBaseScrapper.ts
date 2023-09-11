@@ -1,7 +1,10 @@
 import { Product } from "../types/product";
 
 interface EcommerceBaseScrapper {
-    getItemsWithLowestPriceBySearchTerm(searchTerm: string, count:number):Promise<Product[]>
+  getItemsWithLowestPriceBySearchTerm(
+    searchTerm: string,
+    count: number,
+  ): Promise<Product[]>;
 }
 
-export default EcommerceBaseScrapper
+export default EcommerceBaseScrapper;

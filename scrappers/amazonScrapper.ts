@@ -12,10 +12,13 @@ import {
 import filterAndSortProducts from "../helpers/filterAndSortProducts";
 
 class AmazonScrapper implements EcommerceBaseScrapper {
-  private async goToMainPage(browser: Browser): Promise<Page> {
+  private async goToMainPage(
+    browser: Browser,
+    baseLink: string,
+  ): Promise<Page> {
     const page = await browser.newPage();
 
-    await page.goto(BASE_URL);
+    await page.goto(baseLink);
 
     return page;
   }
@@ -53,6 +56,7 @@ class AmazonScrapper implements EcommerceBaseScrapper {
   async getItemsWithLowestPriceBySearchTerm(
     searchTerm: string,
     count: number,
+    baseLink?: string,
   ): Promise<Product[]> {
     const stealth = require("puppeteer-extra-plugin-stealth")();
 
@@ -60,7 +64,7 @@ class AmazonScrapper implements EcommerceBaseScrapper {
 
     const browser = await chromium.launch({ headless: true });
 
-    const page = await this.goToMainPage(browser);
+    const page = await this.goToMainPage(browser, baseLink || BASE_URL);
 
     await this.navigateBySearchTerm(page, searchTerm);
 
